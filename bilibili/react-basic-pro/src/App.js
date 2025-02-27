@@ -1,5 +1,7 @@
 import './App.scss'
 import avatar from './images/bozai.png'
+import { useState } from 'react'
+import { orderBy } from 'lodash'
 
 /**
  * 评论列表的渲染和操作
@@ -7,10 +9,6 @@ import avatar from './images/bozai.png'
  * 1. 根据状态渲染评论列表
  * 2. 删除评论
  */
-
-function onDelete() {
-  console.log(1);
-}
 
 // 评论列表数据
 const defaultList = [
@@ -78,6 +76,23 @@ const tabs = [
 ]
 
 const App = () => {
+  const [list, setList] = useState(defaultList)
+  const [tab, setTab] = useState('hot')
+  const onDelete = rpid => {
+    setList(list.filter(item => item.rpid !== rpid))
+    console.log(rpid);
+  }
+  const onTab = (type) => {
+    setTab(type)
+    let newList
+    // if (type==='time') {
+    //   newList = orderBy(list, 'ctime', 'desc')     
+    // } else {
+    //   newList = orderBy(list, 'like', 'desc')
+    // }
+    // setList(newList)
+    console.log(type);
+  }
   return (
     <div className="app">
       {/* 导航 Tab */}
@@ -90,8 +105,12 @@ const App = () => {
           </li>
           <li className="nav-sort">
             {/* 高亮类名： active */}
-            <span className='nav-item'>最新</span>
-            <span className='nav-item'>最热</span>
+            {tabs.map(item => <span
+              key={item.type}
+              onClick={()=>onTab(item.type)}
+              className={item.type === tab ? 'nav-item active' : 'nav-item'}
+            >{item.text}</span>)}
+            
           </li>
         </ul>
       </div>
@@ -118,7 +137,7 @@ const App = () => {
           </div>
         </div>
         {/* 评论列表 */}
-        {defaultList.map(item =><div className="reply-list">
+        {defaultList.map(item =><div key={item.rpid} className="reply-list">
           {/* 评论项 */}
           <div className="reply-item">
             {/* 头像 */}
@@ -144,9 +163,12 @@ const App = () => {
                   <span className="reply-time">{item.ctime}</span>
                   {/* 评论数量 */}
                   <span className="reply-time">点赞数:{item.like}</span>
-                  <span className="delete-btn" onClick = {onDelete}>
+                  {user.uid === item.user.uid && (
+                    <span className="delete-btn" onClick = {onDelete}>
                     删除
                   </span>
+                  )}
+                  
 
                 </div>
               </div>
