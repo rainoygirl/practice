@@ -1,6 +1,6 @@
 import './App.scss'
 import avatar from './images/bozai.png'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { orderBy } from 'lodash'
 
 /**
@@ -85,14 +85,21 @@ const App = () => {
   const onTab = (type) => {
     setTab(type)
     let newList
-    // if (type==='time') {
-    //   newList = orderBy(list, 'ctime', 'desc')     
-    // } else {
-    //   newList = orderBy(list, 'like', 'desc')
-    // }
-    // setList(newList)
+    if (type==='time') {
+      newList = orderBy(list, ['ctime'], ['desc']);     
+    } else {
+      newList = orderBy(list, ['like'], ['desc']);     
+    }
+    setList(newList)
     console.log(type);
   }
+
+  const inputRef = useRef()
+  const onChange = () => {
+    console.log(inputRef.current.value);
+    console.log(1);
+  }
+
   return (
     <div className="app">
       {/* 导航 Tab */}
@@ -127,6 +134,7 @@ const App = () => {
           <div className="reply-box-wrap">
             {/* 评论框 */}
             <textarea
+              onChange = {onChange}
               className="reply-box-textarea"
               placeholder="发一条友善的评论"
             />
@@ -137,7 +145,7 @@ const App = () => {
           </div>
         </div>
         {/* 评论列表 */}
-        {defaultList.map(item =><div key={item.rpid} className="reply-list">
+        {list.map(item =><div key={item.rpid} className="reply-list">
           {/* 评论项 */}
           <div className="reply-item">
             {/* 头像 */}
