@@ -93,7 +93,7 @@ const App = () => {
     setList(newList)
     console.log(type);
   }
-
+  const [value,setVaalue] = useState('')
   const inputRef = useRef()
   const onChange = () => {
     console.log(inputRef.current.value);
@@ -134,6 +134,7 @@ const App = () => {
           <div className="reply-box-wrap">
             {/* 评论框 */}
             <textarea
+              value={value}
               onChange = {onChange}
               className="reply-box-textarea"
               placeholder="发一条友善的评论"
