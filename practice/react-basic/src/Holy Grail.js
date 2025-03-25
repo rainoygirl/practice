@@ -52,7 +52,7 @@ const Wrap = styled.div`
   }
 `;
 
-function App() {
+function Holy_Grail() {
   return (
     <Wrap>
       <div className="holy-grail">
@@ -68,4 +68,4 @@ function App() {
   );
 }
 
-export default App;
+export default Holy_Grail;
