@@ -11,10 +11,10 @@ import Full_screen from "./0325/full screen";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Holy_Grail />
+    {/* <Holy_Grail /> */}
     {/* <Css_Grid /> */}
     {/* <Full_screen /> */}
-    {/* <Test /> */}
+    <Test />
   </React.StrictMode>
 );
 
